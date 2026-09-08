@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ireland ✦ Evan & Kiara ✦ Dec 3–8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --green-deep: #0b3d2e;
+    --green: #16603f;
+    --green-soft: #2e7d5b;
+    --gold: #d4a24e;
+    --gold-soft: #e7c98a;
+    --cream: #f7f1e3;
+    --cream-dim: #ece2ca;
+    --ink: #10231b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    background: #061f16;
+    font-family: 'Jost', sans-serif;
+    color: var(--cream);
+    overflow: hidden;
+  }
+
+  /* ---------- Deck ---------- */
+  .deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 7vh 8vw;
+    opacity: 0;
+    transform: scale(1.03);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    pointer-events: none;
+    overflow-y: auto;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  /* Decorative grain / vignette overlay */
+  .slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.35) 100%);
+  }
+
+  .eyebrow {
+    font-size: clamp(0.7rem, 1.4vw, 0.95rem);
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--gold-soft);
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    line-height: 1.02;
+    font-size: clamp(2.8rem, 8vw, 6.5rem);
+    position: relative;
+    z-index: 2;
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+    line-height: 1.05;
+    position: relative;
+    z-index: 2;
+  }
+  .lede {
+    font-weight: 300;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    max-width: 46ch;
+    line-height: 1.6;
+    margin-top: 1.4rem;
+    color: var(--cream-dim);
+    position: relative;
+    z-index: 2;
+  }
+  .tag {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.5rem 1.4rem;
+    border: 1px solid rgba(231,201,138,0.5);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+  }
+
+  .divider {
+    position: relative;
+    z-index: 2;
+    width: 64px;
+    height: 1px;
+    background: var(--gold);
+    margin: 1.6rem auto;
+    opacity: 0.7;
+  }
+
+  /* ---------- Slide backgrounds ---------- */
+  .bg-cover   { background: linear-gradient(135deg, #08301f 0%, #0e4a30 45%, #17663f 100%); }
+  .bg-flights { background: linear-gradient(160deg, #0a2a3a 0%, #123b4d 100%); }
+  .bg-prep    { background: linear-gradient(150deg, #123322 0%, #0b3d2e 100%); }
+  .bg-map     { background: linear-gradient(135deg, #0b3d2e 0%, #16603f 100%); }
+  .bg-guinness{ background: linear-gradient(160deg, #1a1206 0%, #2a1c08 55%, #120c04 100%); }
+  .bg-jameson { background: linear-gradient(160deg, #2a1a06 0%, #402808 60%, #1c1204 100%); }
+  .bg-trinity { background: linear-gradient(150deg, #2b1d0c 0%, #3a2a12 100%); }
+  .bg-bday    { background: linear-gradient(150deg, #2a0f2e 0%, #4a1740 55%, #1a0a1e 100%); }
+  .bg-dinner  { background: linear-gradient(150deg, #3a0f1e 0%, #5a1526 55%, #200a12 100%); }
+  .bg-temple  { background: linear-gradient(135deg, #3a0d20 0%, #571533 60%, #2a0a17 100%); }
+  .bg-castle  { background: linear-gradient(150deg, #14243a 0%, #1e3552 100%); }
+  .bg-xmas    { background: linear-gradient(150deg, #4a0f18 0%, #6b1620 55%, #2c0a10 100%); }
+  .bg-howth   { background: linear-gradient(160deg, #0a3540 0%, #0f5560 60%, #073038 100%); }
+  .bg-moher   { background: linear-gradient(160deg, #123322 0%, #1c5a3a 55%, #0a2c1c 100%); }
+  .bg-food    { background: linear-gradient(150deg, #3a2410 0%, #5a3a16 100%); }
+  .bg-end     { background: linear-gradient(135deg, #08301f 0%, #0e4a30 50%, #17663f 100%); }
+
+  /* Big faint emoji watermark */
+  .watermark {
+    position: absolute;
+    z-index: 1;
+    font-size: 30vw;
+    opacity: 0.06;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: grayscale(0.2);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ---------- Flight cards ---------- */
+  .flights {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2.2rem;
+  }
+  .flight-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(231,201,138,0.25);
+    border-radius: 18px;
+    padding: 1.8rem 2.2rem;
+    min-width: 260px;
+    backdrop-filter: blur(6px);
+    text-align: left;
+  }
+  .flight-card .route {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .flight-card .route .arrow { color: var(--gold); margin: 0 0.35rem; }
+  .flight-card .via { margin-top: 0.35rem; font-size: 0.85rem; color: var(--gold-soft); font-weight: 300; letter-spacing: 0.02em; }
+  .flight-card .legs { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.55rem; }
+  .flight-card .leg { font-size: 0.92rem; font-weight: 300; color: var(--cream-dim); line-height: 1.35; }
+  .flight-card .leg .lt { color: #fff; font-weight: 500; margin-right: 0.4rem; }
+  .flight-card .leg.layover {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold-soft); opacity: 0.85; padding-left: 0.1rem;
+    border-left: 2px solid rgba(231,201,138,0.4); padding-left: 0.6rem;
+  }
+  .flight-card .meta { margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid rgba(231,201,138,0.2); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-soft); }
+
+  /* ---------- Checklist ---------- */
+  .checklist {
+    position: relative;
+    z-index: 2;
+    margin-top: 2rem;
+    text-align: left;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 320px));
+    gap: 0.7rem 2.4rem;
+    max-width: 760px;
+  }
+  @media (max-width: 640px) { .checklist { grid-template-columns: 1fr; } }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    font-weight: 300;
+    font-size: 1.02rem;
+  }
+  .check-item:hover { background: rgba(255,255,255,0.09); }
+  .check-item .box {
+    flex: 0 0 22px;
+    width: 22px; height: 22px;
+    border: 2px solid var(--gold);
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    font-size: 0.9rem;
+    color: var(--green-deep);
+    transition: background 0.2s ease;
+  }
+  .check-item.done .box { background: var(--gold); }
+  .check-item.done .label { text-decoration: line-through; opacity: 0.55; }
+  .check-item .box::after { content: "✓"; opacity: 0; }
+  .check-item.done .box::after { opacity: 1; }
+  .check-note { position: relative; z-index:2; margin-top: 1.4rem; font-size: 0.8rem; color: var(--cream-dim); opacity:0.7; font-weight:300; }
+
+  /* ---------- Itinerary list ---------- */
+  .itin {
+    position: relative;
+    z-index: 2;
+    margin-top: 2rem;
+    text-align: left;
+    max-width: 720px;
+    width: 100%;
+  }
+  .itin-row {
+    display: flex;
+    gap: 1.4rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(231,201,138,0.18);
+    align-items: baseline;
+  }
+  .itin-row:last-child { border-bottom: none; }
+  .itin-day {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--gold-soft);
+    flex: 0 0 130px;
+    font-weight: 600;
+  }
+  .itin-desc { font-weight: 300; color: var(--cream); line-height: 1.5; }
+  .itin-desc b { font-weight: 500; color: #fff; }
+
+  /* ---------- Highlights grid ---------- */
+  .hi-list {
+    position: relative;
+    z-index: 2;
+    margin-top: 1.8rem;
+    text-align: left;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .hi-list li {
+    list-style: none;
+    position: relative;
+    padding-left: 1.8rem;
+    font-weight: 300;
+    font-size: 1.08rem;
+    line-height: 1.5;
+  }
+  .hi-list li::before {
+    content: "✦";
+    color: var(--gold);
+    font-size: 0.85rem;
+    position: absolute;
+    left: 0;
+    top: 0.3rem;
+  }
+  .hi-list b { font-weight: 500; color: #fff; }
+
+  .pill {
+    position: relative; z-index: 2;
+    display:inline-block; margin-top: 1.4rem;
+    font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--green-deep); background: var(--gold-soft);
+    padding: 0.4rem 1rem; border-radius: 999px; font-weight:500;
+  }
+
+  /* ---------- Nav controls ---------- */
+  .nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(231,201,138,0.4);
+    background: rgba(0,0,0,0.25);
+    color: var(--gold-soft);
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: grid; place-items: center;
+    backdrop-filter: blur(6px);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .nav-btn:hover { background: rgba(0,0,0,0.5); }
+  .nav-btn:active { transform: translateY(-50%) scale(0.92); }
+  .nav-prev { left: 22px; }
+  .nav-next { right: 22px; }
+
+  .dots {
+    position: fixed;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    gap: 10px;
+    max-width: 80vw;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: rgba(231,201,138,0.3);
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .dot.active { background: var(--gold); transform: scale(1.35); }
+
+  .counter {
+    position: fixed;
+    top: 22px; right: 26px;
+    z-index: 50;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-soft);
+    font-weight: 400;
+  }
+  .brandmark {
+    position: fixed;
+    top: 22px; left: 26px;
+    z-index: 50;
+    font-size: 0.8rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    font-weight: 500;
+  }
+  .hint {
+    position: fixed;
+    bottom: 24px; right: 26px;
+    z-index: 50;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: rgba(247,241,227,0.4);
+    text-transform: uppercase;
+  }
+  .music-btn {
+    position: fixed;
+    bottom: 22px; left: 26px;
+    z-index: 50;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(231,201,138,0.4);
+    color: var(--gold-soft);
+    border-radius: 999px;
+    padding: 0.55rem 1.1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .music-btn:hover { background: rgba(0,0,0,0.5); }
+  .music-btn.on { color: #fff; border-color: var(--gold); }
+  .music-btn .note { font-size: 0.95rem; line-height: 1; }
+  .music-btn.on .note { animation: bob 0.9s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+
+  @media (max-width: 640px) {
+    .brandmark, .hint { display: none; }
+    .nav-btn { width: 44px; height: 44px; }
+    .music-btn { bottom: 16px; left: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1. Cover -->
+  <section class="slide bg-cover active">
+    <div class="watermark">🍀</div>
+    <div class="eyebrow">A Winter Escape</div>
+    <h1>Ireland</h1>
+    <div class="divider"></div>
+    <p class="lede">Five days in Dublin & beyond — cobblestones, cliffs, whiskey, and Christmas lights.</p>
+    <span class="tag">Evan & Kiara · Dec 3 – 8, 2026</span>
+  </section>
+
+  <!-- 2. Flights -->
+  <section class="slide bg-flights">
+    <div class="watermark">✈️</div>
+    <div class="eyebrow">Getting There & Back</div>
+    <h2>Our Flights</h2>
+    <div class="flights">
+      <div class="flight-card">
+        <div class="route">JFK <span class="arrow">→</span> DUB</div>
+        <div class="via">Icelandair · via Reykjavík (KEF)</div>
+        <div class="legs">
+          <div class="leg"><span class="lt">7:25 PM</span>Thu Dec 3 · JFK T7 → KEF · FI 614</div>
+          <div class="leg layover">1h 30m layover · Reykjavík</div>
+          <div class="leg"><span class="lt">7:40 AM</span>Fri Dec 4 · KEF → DUB T1 · FI 416 · arr 10:15 AM</div>
+        </div>
+        <div class="meta">Seats 30D · 30E · Total 9h 50m</div>
+      </div>
+      <div class="flight-card">
+        <div class="route">DUB <span class="arrow">→</span> JFK</div>
+        <div class="via">Icelandair · via Reykjavík (KEF)</div>
+        <div class="legs">
+          <div class="leg"><span class="lt">11:30 AM</span>Tue Dec 8 · DUB T1 → KEF · FI 417</div>
+          <div class="leg layover">2h 40m layover · Reykjavík</div>
+          <div class="leg"><span class="lt">4:50 PM</span>Tue Dec 8 · KEF → JFK T7 · FI 615 · arr 6:00 PM</div>
+        </div>
+        <div class="meta">Seats 30B · 30C · Total 11h 30m</div>
+      </div>
+    </div>
+    <p class="lede">Red-eye out with a quick Reykjavík stop — land fresh Friday morning. Confirmation <b>BWEPUU</b> · Itinerary 73536583794866.</p>
+  </section>
+
+  <!-- 3. Trip Prep Checklist -->
+  <section class="slide bg-prep">
+    <div class="watermark">✅</div>
+    <div class="eyebrow">Before We Fly</div>
+    <h2>Trip Prep Checklist</h2>
+    <div class="checklist" id="checklist">
+      <!-- items injected by JS -->
+    </div>
+    <p class="check-note">Tap an item to check it off — your progress is saved on this device.</p>
+  </section>
+
+  <!-- 4. Itinerary at a glance -->
+  <section class="slide bg-map">
+    <div class="watermark">🗺️</div>
+    <div class="eyebrow">The Plan</div>
+    <h2>Five Days, One Map</h2>
+    <div class="itin">
+      <div class="itin-row"><div class="itin-day">Fri · Dec 4</div><div class="itin-desc">Land in Dublin (10:15 AM), check in, <b>Trinity College</b> & Book of Kells, easy stroll down Grafton St.</div></div>
+      <div class="itin-row"><div class="itin-day">Sat · Dec 5</div><div class="itin-desc"><b>Guinness Storehouse</b> by day, <b>Temple Bar</b> & live music by night.</div></div>
+      <div class="itin-row"><div class="itin-day">Sun · Dec 6</div><div class="itin-desc">Day trip to the <b>Cliffs of Moher</b> & the wild west coast.</div></div>
+      <div class="itin-row"><div class="itin-day">Mon · Dec 7</div><div class="itin-desc"><b>Jameson Distillery</b> tour, Dublin Castle, and Christmas markets after dark.</div></div>
+      <div class="itin-row"><div class="itin-day">Tue · Dec 8</div><div class="itin-desc">Slow morning, last coffee, fly home from DUB (11:30 AM).</div></div>
+    </div>
+  </section>
+
+  <!-- ===== FRI DEC 4 ===== -->
+
+  <!-- 5. Birthday -->
+  <section class="slide bg-bday">
+    <div class="watermark">🎂</div>
+    <div class="eyebrow">Happy Birthday, Evan</div>
+    <h2>Birthday in Dublin</h2>
+    <ul class="hi-list">
+      <li>Ease in after the red-eye — <b>afternoon tea at The Shelbourne</b> or The Merrion, cozy and a little fancy.</li>
+      <li>Birthday dinner: <b>The Winding Stair</b> (views over Ha'penny Bridge) or splurge on Michelin-starred <b>Chapter One</b>.</li>
+      <li>Birthday pints at a Victorian classic — <b>The Long Hall</b>, <b>Kehoe's</b>, or <b>Toner's</b>.</li>
+      <li>Nightcap under the <b>Christmas lights</b> with mulled wine to close out the day.</li>
+    </ul>
+    <span class="pill">Fri Dec 4 · treat yourself 🎂</span>
+  </section>
+
+  <!-- 6. Birthday Dinner Shortlist -->
+  <section class="slide bg-dinner">
+    <div class="watermark">🥂</div>
+    <div class="eyebrow">Fri Dec 4 · Pick One & Book It</div>
+    <h2>Birthday Dinner Shortlist</h2>
+    <ul class="hi-list">
+      <li><b>Chapter One</b> — two Michelin stars, the big-splurge tasting menu. Book weeks ahead.</li>
+      <li><b>The Winding Stair</b> — romantic Irish cooking above the Ha'penny Bridge.</li>
+      <li><b>Delahunt</b> — refined Irish in a gorgeous Victorian room.</li>
+      <li><b>Etto</b> — tiny, buzzy, incredible small plates (reserve early).</li>
+      <li><b>FX Buckley</b> — proper Irish steakhouse if you want a birthday steak.</li>
+    </ul>
+    <span class="pill">Fri Dec 4 · reserve ASAP 🥂</span>
+  </section>
+
+  <!-- 7. Trinity -->
+  <section class="slide bg-trinity">
+    <div class="watermark">📚</div>
+    <div class="eyebrow">Fri Dec 4 · Ireland's Oldest University</div>
+    <h2>Trinity College & the Book of Kells</h2>
+    <ul class="hi-list">
+      <li>See the <b>1,200-year-old Book of Kells</b>, hand-illuminated by monks.</li>
+      <li>Stand in the breathtaking <b>Long Room</b> library — 200,000 old books.</li>
+      <li>Wander the cobbled campus in the heart of the city.</li>
+      <li>Perfect first-day, jet-lag-friendly outing.</li>
+    </ul>
+    <span class="pill">Fri · right after arrival</span>
+  </section>
+
+  <!-- ===== SAT DEC 5 ===== -->
+
+  <!-- 7. Guinness -->
+  <section class="slide bg-guinness">
+    <div class="watermark">🍺</div>
+    <div class="eyebrow">Sat Dec 5 · St. James's Gate</div>
+    <h2>Guinness Storehouse</h2>
+    <ul class="hi-list">
+      <li>Climb seven floors of the iconic <b>pint-glass atrium</b>.</li>
+      <li>Learn to pour the <b>perfect pint</b> at the Guinness Academy.</li>
+      <li>Toast at the <b>Gravity Bar</b> — 360° views over all of Dublin.</li>
+      <li>Book timed tickets online in advance to skip the queue.</li>
+    </ul>
+    <span class="pill">Sat afternoon · ~2 hours</span>
+  </section>
+
+  <!-- 8. Temple Bar -->
+  <section class="slide bg-temple">
+    <div class="watermark">🎻</div>
+    <div class="eyebrow">Sat Dec 5 · Dublin After Dark</div>
+    <h2>Temple Bar & Trad Music</h2>
+    <ul class="hi-list">
+      <li>Cobblestone lanes, red facades, and live <b>trad sessions</b> every night.</li>
+      <li>Pints at <b>The Temple Bar</b>, oysters, and impromptu sing-alongs.</li>
+      <li>Duck into <b>The Auld Dubliner</b> or <b>Gogarty's</b> for the music.</li>
+      <li>Great date-night energy — go later, stay for the craic.</li>
+    </ul>
+    <span class="pill">Sat night · with Kiara 💛</span>
+  </section>
+
+  <!-- ===== SUN DEC 6 ===== -->
+
+  <!-- 9. Cliffs of Moher -->
+  <section class="slide bg-moher">
+    <div class="watermark">🏞️</div>
+    <div class="eyebrow">Sun Dec 6 · The Wild Atlantic Way</div>
+    <h2>Cliffs of Moher Day Trip</h2>
+    <ul class="hi-list">
+      <li>702 ft of sheer cliffs plunging into the Atlantic.</li>
+      <li>Easiest as a <b>guided day tour</b> from Dublin (approx. 12 hrs).</li>
+      <li>Many tours add <b>Galway</b> and the moon-like <b>Burren</b>.</li>
+      <li>Book ahead — the single most jaw-dropping day of the trip.</li>
+    </ul>
+    <span class="pill">Sun · full day · dress warm</span>
+  </section>
+
+  <!-- ===== MON DEC 7 ===== -->
+
+  <!-- 10. Jameson -->
+  <section class="slide bg-jameson">
+    <div class="watermark">🥃</div>
+    <div class="eyebrow">Mon Dec 7 · Bow St., Smithfield</div>
+    <h2>Jameson Distillery</h2>
+    <ul class="hi-list">
+      <li>Guided tour through the original <b>1780 distillery</b>.</li>
+      <li>Guided <b>whiskey tasting</b> — compare Irish, Scotch & bourbon.</li>
+      <li>Cap it with a cocktail at <b>JJ's Bar</b>.</li>
+      <li>A cozy, warm afternoon activity for the winter chill.</li>
+    </ul>
+    <span class="pill">Mon · book the Bow St. Experience</span>
+  </section>
+
+  <!-- 11. Castle & Cathedrals -->
+  <section class="slide bg-castle">
+    <div class="watermark">🏰</div>
+    <div class="eyebrow">Mon Dec 7 · History & Stone</div>
+    <h2>Dublin Castle & St. Patrick's</h2>
+    <ul class="hi-list">
+      <li>Explore <b>Dublin Castle</b>, 800 years at the city's core.</li>
+      <li>Marvel at <b>St. Patrick's Cathedral</b>, Ireland's largest.</li>
+      <li>Nearby: <b>Christ Church</b> and the medieval quarter.</li>
+      <li>Optional: <b>Kilmainham Gaol</b> for the deep history buffs.</li>
+    </ul>
+    <span class="pill">Mon morning</span>
+  </section>
+
+  <!-- ===== ANYTIME ===== -->
+
+  <!-- 12. Christmas Markets -->
+  <section class="slide bg-xmas">
+    <div class="watermark">🎄</div>
+    <div class="eyebrow">Any Evening · December Magic</div>
+    <h2>Christmas Markets & Lights</h2>
+    <ul class="hi-list">
+      <li>Mulled wine & stalls at the <b>Dublin Christmas markets</b>.</li>
+      <li>Glittering lights down <b>Grafton & Henry Street</b>.</li>
+      <li>Warm up with hot chocolate and roasted chestnuts.</li>
+      <li>The whole city sparkles — the best part of a winter trip.</li>
+    </ul>
+    <span class="pill">Every evening · festive & free</span>
+  </section>
+
+  <!-- 13. Howth -->
+  <section class="slide bg-howth">
+    <div class="watermark">🌊</div>
+    <div class="eyebrow">Free Morning · 30 Mins by DART</div>
+    <h2>Howth Cliff Walk</h2>
+    <ul class="hi-list">
+      <li>Seaside village with dramatic <b>coastal cliff trails</b>.</li>
+      <li>The freshest <b>fish & chips</b> right on the pier.</li>
+      <li>Spot seals in the harbour and a working lighthouse.</li>
+      <li>Easy half-day escape if we want a quieter morning.</li>
+    </ul>
+    <span class="pill">Flexible · weather permitting</span>
+  </section>
+
+  <!-- 14. Food & Pubs -->
+  <section class="slide bg-food">
+    <div class="watermark">🍲</div>
+    <div class="eyebrow">Throughout · Eat, Drink, Repeat</div>
+    <h2>Food & Cozy Pubs</h2>
+    <ul class="hi-list">
+      <li>Hearty <b>Irish stew</b>, boxty, and a proper full Irish breakfast.</li>
+      <li>Pints by the fire at <b>The Long Hall</b> or <b>Kehoe's</b>.</li>
+      <li>Coffee & pastries at a warm café between the rain.</li>
+      <li>A nice sit-down dinner for a special date night.</li>
+    </ul>
+    <span class="pill">Throughout · save room</span>
+  </section>
+
+  <!-- 15. Closing -->
+  <section class="slide bg-end">
+    <div class="watermark">🍀</div>
+    <div class="eyebrow">Sláinte</div>
+    <h1>To Ireland</h1>
+    <div class="divider"></div>
+    <p class="lede">Here's to cliffs, castles, cozy pubs, and five days with you and Kiara.</p>
+    <span class="tag">Evan & Kiara · Dec 2026</span>
+  </section>
+
+</div>
+
+<!-- Controls -->
+<div class="brandmark">Éire · MMXXVI</div>
+<div class="counter" id="counter">01 / 16</div>
+<button class="nav-btn nav-prev" id="prev" aria-label="Previous slide">‹</button>
+<button class="nav-btn nav-next" id="next" aria-label="Next slide">›</button>
+<div class="dots" id="dots"></div>
+<div class="hint">← → or Space to navigate</div>
+<button class="music-btn" id="music"><span class="note">♪</span><span id="music-label">Play Music</span></button>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  let idx = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => go(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function go(n) {
+    idx = (n + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+  }
+  const next = () => go(idx + 1);
+  const prev = () => go(idx - 1);
+
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', prev);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+
+  // Touch swipe
+  let startX = null;
+  document.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+  document.addEventListener('touchend', e => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 50) (dx < 0 ? next() : prev());
+    startX = null;
+  }, {passive:true});
+
+  /* ---------- Checklist ---------- */
+  const prepItems = [
+    "Renew / get Evan's passport",
+    "Check Kiara's passport is valid 6+ months",
+    "Book Cliffs of Moher day tour",
+    "Reserve Guinness Storehouse tickets",
+    "Book Jameson Bow St. tour",
+    "Reserve Trinity / Book of Kells slot",
+    "Book airport transfer or Aircoach",
+    "Notify banks of travel dates",
+    "Get euros / travel card",
+    "Buy travel adapters (Type G)",
+    "Download offline maps + transit app",
+    "Pack warm layers & rain jacket",
+    "Confirm hotel / Airbnb booking",
+    "Travel insurance",
+  ];
+
+  const KEY = 'ireland-prep-2026';
+  const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+  const list = document.getElementById('checklist');
+
+  prepItems.forEach((text, i) => {
+    const done = !!saved[i];
+    const item = document.createElement('div');
+    item.className = 'check-item' + (done ? ' done' : '');
+    item.innerHTML = '<span class="box"></span><span class="label">' + text + '</span>';
+    item.addEventListener('click', () => {
+      item.classList.toggle('done');
+      saved[i] = item.classList.contains('done');
+      localStorage.setItem(KEY, JSON.stringify(saved));
+    });
+    list.appendChild(item);
+  });
+
+  /* ---------- Music: synthesized upbeat Irish jig (Web Audio) ---------- */
+  // Notes (Hz), D major — the classic key for Irish tunes.
+  const D4=293.66, E4=329.63, Fs4=369.99, G4=392.00, A4=440.00, B4=493.88,
+        Cs5=554.37, D5=587.33, E5=659.25, Fs5=739.99;
+  const D3=146.83, E3=164.81, G3=196.00, A2=110.00;
+
+  // 6/8 jig: 8 bars of 6 eighth-notes. 0 = rest.
+  const melody = [
+    D4, Fs4, A4,  D5, A4, Fs4,
+    G4, B4, D5,   Cs5, A4, Fs4,
+    B4, A4, G4,   Fs4, E4, D4,
+    E4, Fs4, G4,  A4, 0,  0,
+    Fs4, A4, D5,  Fs5, D5, A4,
+    G4, B4, D5,   E5, D5, B4,
+    A4, Fs4, D4,  E4, Fs4, G4,
+    Fs4, E4, D4,  D4, 0,  0
+  ];
+  // Bass root per dotted-quarter (2 per bar → 16 total).
+  const bass = [ D3,A2, G3,A2, D3,A2, A2,A2, D3,D3, G3,G3, D3,A2, D3,D3 ];
+
+  const BPM = 116;                     // lively jig tempo
+  const eighth = (60 / BPM) / 2;       // seconds per eighth note
+
+  let audioCtx = null, master = null;
+  let musicOn = false, autoStarted = false;
+  let schedulerTimer = null, nextNoteTime = 0, step = 0;
+
+  const musicBtn = document.getElementById('music');
+  const musicLabel = document.getElementById('music-label');
+
+  function playNote(freq, time, dur, type, level) {
+    if (!freq) return;
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    osc.connect(g); g.connect(master);
+    g.gain.setValueAtTime(0.0001, time);
+    g.gain.linearRampToValueAtTime(level, time + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, time + dur);
+    osc.start(time);
+    osc.stop(time + dur + 0.03);
+  }
+
+  function scheduler() {
+    while (nextNoteTime < audioCtx.currentTime + 0.25) {
+      const m = melody[step % melody.length];
+      playNote(m, nextNoteTime, eighth * 0.9, 'triangle', 0.16);   // fiddle-ish lead
+      if (step % 3 === 0) {                                          // downbeat of each dotted-quarter
+        const b = bass[Math.floor(step / 3) % bass.length];
+        playNote(b, nextNoteTime, eighth * 3 * 0.95, 'sine', 0.11); // bodhrán/bass drone
+      }
+      nextNoteTime += eighth;
+      step++;
+    }
+    schedulerTimer = setTimeout(scheduler, 60);
+  }
+
+  function startMusic() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      master = audioCtx.createGain();
+      master.gain.value = 0.5;
+      master.connect(audioCtx.destination);
+    }
+    audioCtx.resume();
+    musicOn = true;
+    nextNoteTime = audioCtx.currentTime + 0.1;
+    scheduler();
+    musicBtn.classList.add('on');
+    musicLabel.textContent = 'Music On';
+  }
+
+  function stopMusic() {
+    musicOn = false;
+    clearTimeout(schedulerTimer);
+    if (audioCtx) audioCtx.suspend();
+    musicBtn.classList.remove('on');
+    musicLabel.textContent = 'Play Music';
+  }
+
+  musicBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    autoStarted = true;               // an explicit choice — don't auto-toggle later
+    musicOn ? stopMusic() : startMusic();
+  });
+
+  // Browsers block audio until a user gesture — kick it off on the first one.
+  function autoStart(e) {
+    if (e && musicBtn.contains(e.target)) return;   // let the button manage itself
+    if (!autoStarted && !musicOn) { autoStarted = true; startMusic(); }
+    window.removeEventListener('pointerdown', autoStart);
+    window.removeEventListener('keydown', autoStart);
+  }
+  window.addEventListener('pointerdown', autoStart);
+  window.addEventListener('keydown', autoStart);
+
+  go(0);
+</script>
+</body>
+</html>
